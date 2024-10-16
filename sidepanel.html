@@ -33,7 +33,7 @@
             </h3>
             <p>
               <b>Map :</b> Randomly generate the map<br />
-              <b>Round :</b> Randomly generate the number of rounds<br />
+              <b>Rounds :</b> Randomly generate the number of rounds<br />
               <b>Time :</b> Randomly generate the duration of a round<br />
               <b>Move :</b> Randomly generate whether you can move<br />
               <b>Pan :</b> Randomly generate if you can move the camera<br />
@@ -56,6 +56,10 @@
               <label for="map" class="prevent-select">Map</label>
             </div>
             <div>
+              <input type="checkbox" name="rounds" id="rounds" checked />
+              <label for="rounds" class="prevent-select">Rounds</label>
+            </div>
+            <div>
               <input type="checkbox" name="time" id="time" checked />
               <label for="time" class="prevent-select">Time</label>
             </div>
@@ -70,10 +74,6 @@
             <div>
               <input type="checkbox" name="zoom" id="zoom" checked />
               <label for="zoom" class="prevent-select">Zoom</label>
-            </div>
-            <div>
-              <input type="checkbox" name="rounds" id="rounds" checked />
-              <label for="rounds" class="prevent-select">Rounds</label>
             </div>
           </div>
           <button class="primary-button" id="randomPartyButton">
