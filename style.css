@@ -1,0 +1,366 @@
+@import url("https://fonts.googleapis.com/css?family=Josefin+Sans:100,300,400,600,700");
+@import url("https://fonts.googleapis.com/css?family=Indie+Flower");
+@font-face {
+  font-family: "NeoSansPro";
+  src: url("fonts/NeoSansProBoldIt.OTF") format("opentype");
+  font-weight: bold;
+  font-style: italic;
+}
+@font-face {
+  font-family: "NeoSansPro";
+  src: url("fonts/NeoSansProBold.OTF") format("opentype");
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: "NeoSansPro";
+  src: url("fonts/NeoSansProRegular.OTF") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "NeoSansPro";
+  src: url("fonts/NeoSansProItalic.OTF") format("opentype");
+  font-weight: normal;
+  font-style: italic;
+}
+html {
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(
+      66.5% 221.21% at 136.03% -61.44%,
+      rgba(255, 0, 0, 0.4) 0%,
+      rgba(161, 155, 217, 0) 92.09%
+    ),
+    radial-gradient(
+      93.54% 126.91% at 29.15% -56.29%,
+      rgba(177, 81, 255, 0.7) 0%,
+      rgba(233, 69, 96, 0) 92.09%
+    ),
+    radial-gradient(
+      86.19% 101.84% at -17.13% -24.8%,
+      rgba(119, 236, 255, 0.79) 0%,
+      rgba(35, 62, 77, 0) 92.09%
+    ),
+    #1a1a2e;
+  font-family: NeoSansPro, sans-serif;
+  font-weight: normal;
+  color: white;
+  text-transform: uppercase;
+  overflow: hidden;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  background-position: left top;
+}
+
+#warning-message a {
+  font-size: 26px;
+  font-family: NeoSansPro, sans-serif;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  display: block;
+}
+
+#warning-message p {
+  font-size: 16px;
+  font-family: NeoSansPro, sans-serif;
+  color: white;
+  text-align: center;
+}
+
+#warning-message {
+  margin-top: 20px;
+}
+
+label {
+  font-weight: bold;
+}
+
+#loader {
+  display: none;
+  justify-content: center;
+}
+
+label,
+button,
+header,
+.secondary-button {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+h2 {
+  font-size: 26px;
+  font-family: NeoSansPro, sans-serif;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}
+
+.primary-button {
+  font-family: NeoSansPro, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  color: white;
+  text-transform: uppercase;
+  text-align: center;
+  text-shadow: 0px 1px 2px rgba(26, 26, 46, 0.7);
+  text-decoration: none;
+  border: none;
+  padding: 12px 26px;
+  border-radius: 999px;
+  background: #6cb928;
+  box-shadow: 0px -2px 0px 0px rgba(0, 0, 0, 0.3) inset,
+    0px 1px 0px 0px rgba(255, 255, 255, 0.2) inset,
+    0px 4.4px 18px 0px rgba(0, 0, 0, 0.25);
+  transition: all 200ms;
+}
+.primary-button:hover {
+  transform: scale(1.1);
+  transition: all 200ms;
+}
+.primary-button:active {
+  transform: scale(1);
+  transition: all 200ms;
+}
+
+.secondary-button {
+  text-align: center;
+  padding: 10px 24px;
+  border-radius: 60px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(9.5px);
+  font-size: 12px;
+  font-style: italic;
+  transition: all 200ms;
+}
+.secondary-button:hover {
+  transform: scale(1.1);
+  transition: all 200ms;
+}
+.secondary-button:active {
+  transform: scale(1);
+  transition: all 200ms;
+}
+
+.buttons-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.map {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+.map > img {
+  height: 220px;
+  width: 220px;
+  aspect-ratio: 1/1;
+  border-radius: 999px;
+  object-fit: cover;
+}
+.map .name {
+  font-size: 26px;
+}
+.map .name a {
+  margin-left: 6px;
+}
+.map > div {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.map div div {
+  display: flex;
+  align-items: end;
+  gap: 10px;
+  font-size: 18px;
+}
+.map div div :last-child span {
+  color: #a19bd9;
+}
+.map div div > img {
+  width: 27px;
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.options div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+  flex-grow: 1;
+  min-width: 200px;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 14px 24px;
+  border-radius: 10px;
+  box-shadow: 0px 30px 60px -10px rgba(0, 0, 0, 0.16),
+    0px 4px 44px 0px rgba(32, 17, 46, 0.2);
+}
+.options div img {
+  height: 50px;
+}
+
+.tools-bar {
+  position: fixed;
+  bottom: 26px;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.generator-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.random-form {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px 30px;
+  border-radius: 18px;
+  flex-wrap: wrap;
+}
+.random-form div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.buttons-section > a {
+  display: none;
+}
+
+footer {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: normal;
+  font-style: italic;
+}
+footer a {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 22px;
+  width: 22px;
+  border-radius: 4px;
+  background-color: transparent;
+  border: solid 3px #7950e5;
+  display: flex;
+  justify-content: center;
+}
+input[type="checkbox"]:after {
+  font-family: "Font Awesome 6 Free";
+  font-size: 16px;
+  font-weight: 900;
+  content: "\f00c";
+  color: white;
+  display: none;
+}
+input[type="checkbox"]:checked {
+  background-color: #7950e5;
+}
+input[type="checkbox"]:checked:after {
+  display: block;
+}
+
+.mobile {
+  display: none;
+  flex-direction: column;
+  margin-top: 40px;
+  gap: 30px !important;
+}
+.mobile #closeModal {
+  font-family: NeoSansPro, sans-serif;
+  font-style: italic;
+  color: white;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 20px 60px;
+  border-radius: 999px;
+  text-align: center;
+  background: #43454b;
+  border: none;
+}
+.mobile #closeModal:hover {
+  transform: scale(1.1);
+  transition: all 200ms;
+}
+.mobile #closeModal:active {
+  transform: scale(1);
+  transition: all 200ms;
+}
+.mobile span {
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: normal;
+  font-style: italic;
+}
+.mobile span a {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}

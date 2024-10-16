@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Random Party Generator - Geoguessr",
+  "description": "Cette extention permet de générer des parties aléatoires",
+  "version": "1.0",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "Random Party Generator - Geoguessr"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "host_permissions": ["https://*.geoguessr.com/*"],
+  "permissions": ["storage", "scripting", "activeTab", "sidePanel"]
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random Party Generator - GeoGuessr</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <div id="warning-message" style="display: none">
+        <p>The extension can only be used on</p>
+        <a href="https://www.geoguessr.com" target="_blank">geoguessr.com</a>
+      </div>
+      <div id="sidepanel-content">
+        <section class="generator-section">
+          <h2>Generator</h2>
+          <div class="random-form" id="modal">
+            <div class="tooltip">
+              <span class="tooltiptext">Tooltip text</span>
+              <input type="checkbox" name="map" id="map" checked />
+              <label for="map" class="prevent-select">Map</label>
+            </div>
+            <div>
+              <input type="checkbox" name="time" id="time" checked />
+              <label for="time" class="prevent-select">Time</label>
+            </div>
+            <div>
+              <input type="checkbox" name="move" id="move" checked />
+              <label for="move" class="prevent-select">Move</label>
+            </div>
+            <div>
+              <input type="checkbox" name="pan" id="pan" checked />
+              <label for="pan" class="prevent-select">Pan </label>
+            </div>
+            <div>
+              <input type="checkbox" name="zoom" id="zoom" checked />
+              <label for="zoom" class="prevent-select">Zoom</label>
+            </div>
+            <div>
+              <input type="checkbox" name="rounds" id="rounds" checked />
+              <label for="rounds" class="prevent-select">Rounds</label>
+            </div>
+          </div>
+          <button class="primary-button" id="randomPartyButton">
+            Random Game
+          </button>
+        </section>
+      </div>
+    </main>
+    <script src="index.js"></script>
+  </body>
+</html>
