@@ -34,6 +34,22 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  document
+    .querySelector(".generator-title i")
+    .addEventListener("mouseover", function () {
+      document.querySelector(".generator-informations").style.visibility =
+        "visible";
+      document.querySelector(".generator-informations").style.opacity = "1";
+    });
+
+  document
+    .querySelector(".generator-title i")
+    .addEventListener("mouseout", function () {
+      document.querySelector(".generator-informations").style.visibility =
+        "hidden";
+      document.querySelector(".generator-informations").style.opacity = "0";
+    });
+
   const checkboxIds = ["map", "time", "move", "pan", "zoom", "rounds"];
   const checkboxes = {};
 

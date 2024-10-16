@@ -25,8 +25,6 @@
   font-style: italic;
 }
 html {
-  width: 100vw;
-  height: 100vh;
   background: radial-gradient(
       66.5% 221.21% at 136.03% -61.44%,
       rgba(255, 0, 0, 0.4) 0%,
@@ -47,7 +45,7 @@ html {
   font-weight: normal;
   color: white;
   text-transform: uppercase;
-  overflow: hidden;
+  overflow-x: hidden;
   background-size: auto 100%;
   background-repeat: no-repeat;
   background-position: left top;
@@ -76,11 +74,6 @@ html {
 
 label {
   font-weight: bold;
-}
-
-#loader {
-  display: none;
-  justify-content: center;
 }
 
 label,
@@ -161,87 +154,8 @@ h2 {
   gap: 18px;
 }
 
-.result {
-  display: flex;
-  flex-direction: column;
-  gap: 60px;
-}
-
-.map {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 40px;
-}
-.map > img {
-  height: 220px;
-  width: 220px;
-  aspect-ratio: 1/1;
-  border-radius: 999px;
-  object-fit: cover;
-}
-.map .name {
-  font-size: 26px;
-}
-.map .name a {
-  margin-left: 6px;
-}
-.map > div {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-.map div div {
-  display: flex;
-  align-items: end;
-  gap: 10px;
-  font-size: 18px;
-}
-.map div div :last-child span {
-  color: #a19bd9;
-}
-.map div div > img {
-  width: 27px;
-}
-
-.options {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-.options div {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: nowrap;
-  flex-grow: 1;
-  min-width: 200px;
-  justify-content: center;
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 14px 24px;
-  border-radius: 10px;
-  box-shadow: 0px 30px 60px -10px rgba(0, 0, 0, 0.16),
-    0px 4px 44px 0px rgba(32, 17, 46, 0.2);
-}
-.options div img {
-  height: 50px;
-}
-
-.tools-bar {
-  position: fixed;
-  bottom: 26px;
-  left: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
-}
-
 .generator-section {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -263,20 +177,27 @@ h2 {
   gap: 8px;
 }
 
-.buttons-section > a {
-  display: none;
+.generator-title {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
-footer {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  color: rgba(255, 255, 255, 0.3);
-  font-weight: normal;
-  font-style: italic;
+.generator-title i {
+  font-size: 20px;
 }
-footer a {
-  color: rgba(255, 255, 255, 0.3);
+
+.generator-informations {
+  visibility: hidden;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.95);
+  border-radius: 18px;
+  padding: 6px 20px;
+  text-transform: none;
+  position: absolute;
+  z-index: 1;
+  top: 60px;
 }
 
 input[type="checkbox"] {
@@ -303,64 +224,4 @@ input[type="checkbox"]:checked {
 }
 input[type="checkbox"]:checked:after {
   display: block;
-}
-
-.mobile {
-  display: none;
-  flex-direction: column;
-  margin-top: 40px;
-  gap: 30px !important;
-}
-.mobile #closeModal {
-  font-family: NeoSansPro, sans-serif;
-  font-style: italic;
-  color: white;
-  text-transform: uppercase;
-  text-decoration: none;
-  font-size: 18px;
-  font-weight: bold;
-  padding: 20px 60px;
-  border-radius: 999px;
-  text-align: center;
-  background: #43454b;
-  border: none;
-}
-.mobile #closeModal:hover {
-  transform: scale(1.1);
-  transition: all 200ms;
-}
-.mobile #closeModal:active {
-  transform: scale(1);
-  transition: all 200ms;
-}
-.mobile span {
-  color: rgba(255, 255, 255, 0.3);
-  font-weight: normal;
-  font-style: italic;
-}
-.mobile span a {
-  color: rgba(255, 255, 255, 0.3);
-}
-
-.tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
-}
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
-
-  position: absolute;
-  z-index: 1;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
 }

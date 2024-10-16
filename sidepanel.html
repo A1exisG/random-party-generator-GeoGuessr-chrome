@@ -18,10 +18,40 @@
       </div>
       <div id="sidepanel-content">
         <section class="generator-section">
-          <h2>Generator</h2>
+          <div class="generator-title">
+            <h2>Generator</h2>
+            <i class="fa-regular fa-circle-question"></i>
+          </div>
+
+          <div class="generator-informations">
+            <p>
+              With this generator, you can randomly generate a map and game
+              parameters.
+            </p>
+            <h3>
+              Step 1: Select the information you wish to randomly generate
+            </h3>
+            <p>
+              <b>Map :</b> Randomly generate the map<br />
+              <b>Round :</b> Randomly generate the number of rounds<br />
+              <b>Time :</b> Randomly generate the duration of a round<br />
+              <b>Move :</b> Randomly generate whether you can move<br />
+              <b>Pan :</b> Randomly generate if you can move the camera<br />
+              <b>Zoom :</b> Randomly generate if you can zoom
+            </p>
+            <h3>Step 2: Click on the “Random Game” button</h3>
+            <p>
+              If you have generated a random map, you will be automatically
+              redirected to the map page with all parameters applied.
+            </p>
+            <p>
+              If you haven't generated a map, then the page you're on will
+              simply refresh and the settings will be applied.
+            </p>
+          </div>
+
           <div class="random-form" id="modal">
-            <div class="tooltip">
-              <span class="tooltiptext">Tooltip text</span>
+            <div>
               <input type="checkbox" name="map" id="map" checked />
               <label for="map" class="prevent-select">Map</label>
             </div>
