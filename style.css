@@ -97,6 +97,7 @@ h2 {
   font-weight: bold;
   color: white;
   text-align: center;
+  margin: 8px 0px;
 }
 
 .primary-button {
@@ -160,6 +161,7 @@ h2 {
   flex-direction: column;
   gap: 20px;
   align-items: center;
+  margin-top: 20px;
 }
 
 .random-form {
@@ -224,4 +226,127 @@ input[type="checkbox"]:checked {
 }
 input[type="checkbox"]:checked:after {
   display: block;
+}
+
+.history-card {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 18px;
+  justify-content: space-between;
+  max-width: 344px;
+}
+
+.history-card img {
+  border-radius: 10px;
+  width: 90px;
+  object-fit: cover;
+}
+
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.settings-container > span {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.settings-items-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 0px 8px;
+}
+
+.settings-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2px;
+}
+
+.settings-item img {
+  width: 26px;
+  height: 26px;
+}
+
+.settings-item span {
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+}
+
+.buttons-container button {
+  width: 34px;
+  height: 100%;
+  border-radius: 12px;
+  border: none;
+}
+
+.buttons-container button i {
+  font-size: 16px;
+}
+
+.green-button {
+  color: white;
+  background-color: #6cb928;
+}
+
+.green-button:hover {
+  background-color: rgb(76, 131, 28);
+}
+
+.red-button {
+  color: white;
+  background-color: #b92828;
+}
+
+.red-button:hover {
+  background-color: rgb(116, 26, 26);
+}
+
+.history-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.history-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#history-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.history-date {
+  text-transform: none;
+  text-align: center;
+  font-size: 10px;
+  font-weight: normal;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+#history-cards-container > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }

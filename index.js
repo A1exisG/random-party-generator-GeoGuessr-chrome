@@ -2,37 +2,208 @@ chrome.sidePanel
   .setPanelBehavior({ openPanelOnActionClick: true })
   .catch((error) => console.error(error));
 
+function checkCurrentTab() {
+  chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
+    let currentTab = tabs[0];
+    let url = currentTab.url;
+
+    if (url && url.includes("geoguessr.com")) {
+      document.getElementById("sidepanel-content").style.display = "block";
+      document.getElementById("warning-message").style.display = "none";
+    } else {
+      document.getElementById("sidepanel-content").style.display = "none";
+      document.getElementById("warning-message").style.display = "block";
+    }
+  });
+}
+
+checkCurrentTab();
+
+chrome.tabs.onActivated.addListener(() => {
+  checkCurrentTab();
+});
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.status === "complete") {
+    checkCurrentTab();
+  }
+});
+
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("randomPartyButton").addEventListener("click", () => {
     generateRandomParty();
   });
 
-  function checkCurrentTab() {
-    chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
-      let currentTab = tabs[0];
-      let url = currentTab.url;
+  // document.getElementById("deletedata").addEventListener("click", () => {
+  //   deleteAllDatas();
+  // });
+  // document.getElementById("getdata").addEventListener("click", () => {
+  //   getChromeStorage();
+  // });
 
-      if (url && url.includes("geoguessr.com")) {
-        document.getElementById("sidepanel-content").style.display = "block";
-        document.getElementById("warning-message").style.display = "none";
-      } else {
-        document.getElementById("sidepanel-content").style.display = "none";
-        document.getElementById("warning-message").style.display = "block";
-      }
+  // document.getElementById("getdata").addEventListener("click", () => {
+  //   updateHistory();
+  // });
+
+  function deleteAllDatas() {
+    chrome.storage.local.clear(function () {
+      console.log("Toutes les données ont été effacées.");
     });
   }
 
-  checkCurrentTab();
+  updateHistory();
 
-  chrome.tabs.onActivated.addListener(() => {
-    checkCurrentTab();
-  });
+  function getChromeStorage() {
+    return new Promise((resolve, reject) => {
+      chrome.storage.local.get(["generatedGames"], function (result) {
+        if (chrome.runtime.lastError) {
+          reject(chrome.runtime.lastError);
+        } else {
+          resolve(result.generatedGames);
+        }
+      });
+    });
+  }
 
-  chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-    if (changeInfo.status === "complete") {
-      checkCurrentTab();
+  async function updateHistory() {
+    try {
+      const datas = await getChromeStorage();
+      const container = document.getElementById("history-cards-container");
+      document.getElementById("generated-games-number").innerText = `(${
+        datas ? datas.length : 0
+      })`;
+
+      if (datas) {
+        container.innerHTML = datas
+          .map((data, index) => {
+            return `
+          <div>
+            <div class='history-card' id='card-${index}'>
+              <img src='${data.imgUrl}' alt='picture of ${data.map}' />
+              <div class='settings-container'>
+                <span>
+                  ${
+                    data.map && data.settings.rounds
+                      ? `${data.map} - ${data.settings.rounds} ${
+                          data.settings.rounds > 1 ? "rounds" : "round"
+                        }`
+                      : data.map ||
+                        `${data.settings.rounds} ${
+                          data.settings.rounds > 1 ? "rounds" : "round"
+                        }`
+                  }
+                </span>
+                <div class='settings-items-container'>
+                  <div class='settings-item'>
+                    <img src='img/time-limit.png' />
+                    <span>${data.settings.timeLimit} sec</span>
+                  </div>
+                  ${
+                    data.settings.forbidMoving !== undefined
+                      ? `<div class='settings-item'>
+                          <img src='img/${
+                            data.settings.forbidMoving
+                              ? "no-move.png"
+                              : "moving-allowed.png"
+                          }' />
+                          <span>${
+                            data.settings.forbidMoving ? "No move" : "Move"
+                          }</span>
+                        </div>`
+                      : ""
+                  }
+                  ${
+                    data.settings.forbidRotating !== undefined
+                      ? `<div class='settings-item'>
+                          <img src='img/${
+                            data.settings.forbidRotating
+                              ? "no-pan.png"
+                              : "panning-allowed.png"
+                          }' />
+                          <span>${
+                            data.settings.forbidRotating ? "No pan" : "Pan"
+                          }</span>
+                        </div>`
+                      : ""
+                  }
+                  ${
+                    data.settings.forbidZooming !== undefined
+                      ? `<div class='settings-item'>
+                          <img src='img/${
+                            data.settings.forbidZooming
+                              ? "no-zoom.png"
+                              : "zooming-allowed.png"
+                          }' />
+                          <span>${
+                            data.settings.forbidZooming ? "No Zoom" : "Zoom"
+                          }</span>
+                        </div>`
+                      : ""
+                  }
+                </div>
+              </div>
+              <div class='buttons-container'>
+                <button class='green-button' id='play-${index}'>
+                  <i class='fa-solid fa-play'></i>
+                </button>
+                <button class='red-button' id='delete-${index}'>
+                  <i class='fa-regular fa-trash-can'></i>
+                </button>
+              </div>
+            </div>
+            <span class="history-date"
+                >Created on ${new Date(data.createdAt).toUTCString()}</span
+              >
+          </div>`;
+          })
+          .join("");
+
+        datas.forEach((data, index) => {
+          document
+            .getElementById(`delete-${index}`)
+            .addEventListener("click", () => {
+              deleteGeneratedGame(index);
+            });
+          document
+            .getElementById(`play-${index}`)
+            .addEventListener("click", () => {
+              lunchHistoryGame(data);
+            });
+        });
+      }
+    } catch (error) {
+      console.error("Erreur lors de la récupération des données : ", error);
     }
-  });
+  }
+
+  function addGeneratedGame(generatedGame) {
+    chrome.storage.local.get(["generatedGames"], function (result) {
+      let allGeneratedGames = result.generatedGames || [];
+      allGeneratedGames.unshift(generatedGame);
+      chrome.storage.local.set(
+        { generatedGames: allGeneratedGames },
+        function () {
+          console.log("New generatedGame in Storage :", generatedGame);
+          updateHistory();
+        }
+      );
+    });
+  }
+
+  function deleteGeneratedGame(index) {
+    chrome.storage.local.get(["generatedGames"], function (result) {
+      let allGeneratedGames = result.generatedGames || [];
+      allGeneratedGames.splice(index, 1);
+      chrome.storage.local.set(
+        { generatedGames: allGeneratedGames },
+        function () {
+          console.log("Delete generatedGame index :", index);
+          updateHistory();
+        }
+      );
+    });
+    updateHistory();
+  }
 
   document
     .querySelector(".generator-title i")
@@ -64,38 +235,80 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   async function generateRandomParty() {
-    console.log("checkboxes", checkboxes);
-
-    const getRandomUrlMap = async () => {
+    const getRandomMap = async () => {
       if (checkboxes.map) {
-        const mapPlayUrl = await generateRandomMap();
-        return `https://www.geoguessr.com/maps${mapPlayUrl}`;
+        const result = await generateRandomMap();
+        const data = {
+          playUrl: `https://www.geoguessr.com/maps${result.playUrl}`,
+          imgUrl: `https://www.geoguessr.com/images/resize:auto:220:220/gravity:ce/plain/${result.images.backgroundLarge}`,
+          map: result.name,
+        };
+        return data;
+      } else {
+        return {
+          playUrl: undefined,
+          imgUrl: "https://alexisg.fr/img/geoguessrlab-no-image.jpg",
+          map: undefined,
+        };
       }
     };
 
-    const mapUrl = await getRandomUrlMap();
-
-    console.log("mapUrl", mapUrl);
+    const randomMap = await getRandomMap();
 
     const currentSettings = await getLocalStorageFromTab();
 
-    const settings = JSON.stringify(
-      generateRandomSettings(JSON.parse(currentSettings))
-    );
+    const settings = generateRandomSettings(JSON.parse(currentSettings));
 
-    console.log("settings", settings);
+    const newGeneratedGame = {
+      createdAt: Date.now(),
+      imgUrl: randomMap.imgUrl,
+      map: randomMap.map,
+      playUrl: randomMap.playUrl,
+      settings: settings.storage,
+    };
+
+    addGeneratedGame(newGeneratedGame);
 
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       chrome.scripting.executeScript({
         target: { tabId: tabs[0].id },
         func: setLocalStorage,
-        args: ["game-settings", settings],
+        args: ["game-settings", JSON.stringify(settings.localStorage)],
       });
       if (checkboxes.map) {
         chrome.scripting.executeScript({
           target: { tabId: tabs[0].id },
           func: goToUrl,
-          args: [mapUrl],
+          args: [randomMap.playUrl],
+        });
+      } else {
+        chrome.scripting.executeScript({
+          target: { tabId: tabs[0].id },
+          func: realoadPage,
+        });
+      }
+    });
+  }
+
+  async function lunchHistoryGame(data) {
+    const currentSettings = await getLocalStorageFromTab();
+
+    const settings = {
+      ...JSON.parse(currentSettings),
+      ...data.settings,
+    };
+
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.scripting.executeScript({
+        target: { tabId: tabs[0].id },
+        func: setLocalStorage,
+        args: ["game-settings", JSON.stringify(settings)],
+      });
+      if (data.playUrl) {
+        chrome.scripting.executeScript({
+          target: { tabId: tabs[0].id },
+          func: goToUrl,
+          args: [data.playUrl],
         });
       } else {
         chrome.scripting.executeScript({
@@ -130,7 +343,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const randomIndex = Math.floor(Math.random() * data.length);
       const randomMap = data[randomIndex];
 
-      return randomMap.playUrl;
+      return randomMap;
     } else {
       console.error("Aucune carte trouvée.");
     }
@@ -185,9 +398,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function generateRandomSettings(currentSettings) {
-    console.log("currentSettings", currentSettings);
-
-    const randomData = (type, id, localName) => {
+    const randomData = (type, id, localName, forLocalStorage) => {
       if (checkboxes[id]) {
         if (type === "randomBoolean") {
           return Math.random() >= 0.5;
@@ -197,22 +408,54 @@ document.addEventListener("DOMContentLoaded", function () {
           return Math.floor(Math.random() * 5 + 1);
         }
       } else {
-        return currentSettings[localName];
+        if (forLocalStorage) {
+          return currentSettings[localName];
+        } else {
+          return undefined;
+        }
       }
     };
 
-    const forbidMoving = randomData("randomBoolean", "move", "forbidMoving");
-    const forbidRotating = randomData("randomBoolean", "pan", "forbidRotating");
-    const forbidZooming = randomData("randomBoolean", "zoom", "forbidZooming");
-    const timeLimit = randomData("randomTime", "time", "timeLimit");
-    const rounds = randomData("randomRounds", "rounds", "rounds");
-
     return {
-      forbidMoving,
-      forbidRotating,
-      forbidZooming,
-      timeLimit,
-      rounds,
+      localStorage: {
+        forbidMoving: randomData("randomBoolean", "move", "forbidMoving", true),
+        forbidRotating: randomData(
+          "randomBoolean",
+          "pan",
+          "forbidRotating",
+          true
+        ),
+        forbidZooming: randomData(
+          "randomBoolean",
+          "zoom",
+          "forbidZooming",
+          true
+        ),
+        timeLimit: randomData("randomTime", "time", "timeLimit", true),
+        rounds: randomData("randomRounds", "rounds", "rounds", true),
+      },
+      storage: {
+        forbidMoving: randomData(
+          "randomBoolean",
+          "move",
+          "forbidMoving",
+          false
+        ),
+        forbidRotating: randomData(
+          "randomBoolean",
+          "pan",
+          "forbidRotating",
+          false
+        ),
+        forbidZooming: randomData(
+          "randomBoolean",
+          "zoom",
+          "forbidZooming",
+          false
+        ),
+        timeLimit: randomData("randomTime", "time", "timeLimit", false),
+        rounds: randomData("randomRounds", "rounds", "rounds", false),
+      },
     };
   }
 });
