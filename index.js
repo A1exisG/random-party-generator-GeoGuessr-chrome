@@ -34,6 +34,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }, "2000");
   });
 
+  document
+    .getElementById("deleteHistoryButton")
+    .addEventListener("click", () => {
+      deleteAllGeneratedGame();
+      console.log("je delete check");
+    });
+
   updateHistory();
 
   function getChromeStorage() {
@@ -153,6 +160,15 @@ document.addEventListener("DOMContentLoaded", function () {
               lunchHistoryGame(data);
             });
         });
+        if (datas.length) {
+          document.getElementById("deleteHistoryButton").style.display =
+            "block";
+        } else {
+          document.getElementById("deleteHistoryButton").style.display = "none";
+        }
+      } else {
+        container.innerHTML = "";
+        document.getElementById("deleteHistoryButton").style.display = "none";
       }
     } catch (error) {
       console.error("Erreur lors de la récupération des données : ", error);
@@ -184,6 +200,12 @@ document.addEventListener("DOMContentLoaded", function () {
       );
     });
     updateHistory();
+  }
+
+  function deleteAllGeneratedGame() {
+    chrome.storage.local.remove(["generatedGames"], function () {
+      updateHistory();
+    });
   }
 
   document
