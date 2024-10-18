@@ -28,6 +28,10 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("randomPartyButton").addEventListener("click", () => {
     generateRandomParty();
+    document.getElementById("randomPartyButton").disabled = true;
+    setTimeout(() => {
+      document.getElementById("randomPartyButton").disabled = false;
+    }, "2000");
   });
 
   updateHistory();

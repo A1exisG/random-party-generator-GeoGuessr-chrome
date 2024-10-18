@@ -128,6 +128,10 @@ h2 {
   transition: all 200ms;
 }
 
+.primary-button:disabled {
+  background: #6c6c6c;
+}
+
 .secondary-button {
   text-align: center;
   padding: 10px 24px;
