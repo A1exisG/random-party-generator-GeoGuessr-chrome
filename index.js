@@ -1,7 +1,3 @@
-chrome.sidePanel
-  .setPanelBehavior({ openPanelOnActionClick: true })
-  .catch((error) => console.error(error));
-
 function checkCurrentTab() {
   chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
     let currentTab = tabs[0];
@@ -33,23 +29,6 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("randomPartyButton").addEventListener("click", () => {
     generateRandomParty();
   });
-
-  // document.getElementById("deletedata").addEventListener("click", () => {
-  //   deleteAllDatas();
-  // });
-  // document.getElementById("getdata").addEventListener("click", () => {
-  //   getChromeStorage();
-  // });
-
-  // document.getElementById("getdata").addEventListener("click", () => {
-  //   updateHistory();
-  // });
-
-  function deleteAllDatas() {
-    chrome.storage.local.clear(function () {
-      console.log("Toutes les données ont été effacées.");
-    });
-  }
 
   updateHistory();
 

@@ -15,6 +15,9 @@
   "side_panel": {
     "default_path": "sidepanel.html"
   },
+  "background": {
+    "service_worker": "background.js"
+  },
   "host_permissions": ["https://*.geoguessr.com/*"],
   "permissions": ["storage", "scripting", "activeTab", "sidePanel"]
 }
