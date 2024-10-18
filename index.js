@@ -162,7 +162,6 @@ document.addEventListener("DOMContentLoaded", function () {
       chrome.storage.local.set(
         { generatedGames: allGeneratedGames },
         function () {
-          console.log("New generatedGame in Storage :", generatedGame);
           updateHistory();
         }
       );
@@ -176,7 +175,6 @@ document.addEventListener("DOMContentLoaded", function () {
       chrome.storage.local.set(
         { generatedGames: allGeneratedGames },
         function () {
-          console.log("Delete generatedGame index :", index);
           updateHistory();
         }
       );
@@ -377,7 +375,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function generateRandomSettings(currentSettings) {
-    const randomData = (type, id, localName, forLocalStorage) => {
+    const randomData = (type, id) => {
       if (checkboxes[id]) {
         if (type === "randomBoolean") {
           return Math.random() >= 0.5;
@@ -387,54 +385,30 @@ document.addEventListener("DOMContentLoaded", function () {
           return Math.floor(Math.random() * 5 + 1);
         }
       } else {
-        if (forLocalStorage) {
-          return currentSettings[localName];
-        } else {
-          return undefined;
-        }
+        return undefined;
       }
     };
 
+    const storage = {
+      forbidMoving: randomData("randomBoolean", "move"),
+      forbidRotating: randomData("randomBoolean", "pan"),
+      forbidZooming: randomData("randomBoolean", "zoom"),
+      timeLimit: randomData("randomTime", "time"),
+      rounds: randomData("randomRounds", "rounds"),
+    };
+
+    const localStorage = {
+      ...currentSettings,
+      ...(storage && Object.keys(storage).length > 0
+        ? Object.fromEntries(
+            Object.entries(storage).filter(([_, value]) => value !== undefined)
+          )
+        : {}),
+    };
+
     return {
-      localStorage: {
-        forbidMoving: randomData("randomBoolean", "move", "forbidMoving", true),
-        forbidRotating: randomData(
-          "randomBoolean",
-          "pan",
-          "forbidRotating",
-          true
-        ),
-        forbidZooming: randomData(
-          "randomBoolean",
-          "zoom",
-          "forbidZooming",
-          true
-        ),
-        timeLimit: randomData("randomTime", "time", "timeLimit", true),
-        rounds: randomData("randomRounds", "rounds", "rounds", true),
-      },
-      storage: {
-        forbidMoving: randomData(
-          "randomBoolean",
-          "move",
-          "forbidMoving",
-          false
-        ),
-        forbidRotating: randomData(
-          "randomBoolean",
-          "pan",
-          "forbidRotating",
-          false
-        ),
-        forbidZooming: randomData(
-          "randomBoolean",
-          "zoom",
-          "forbidZooming",
-          false
-        ),
-        timeLimit: randomData("randomTime", "time", "timeLimit", false),
-        rounds: randomData("randomRounds", "rounds", "rounds", false),
-      },
+      localStorage,
+      storage,
     };
   }
 });
