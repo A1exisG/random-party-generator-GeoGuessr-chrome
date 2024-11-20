@@ -84,10 +84,14 @@ document.addEventListener("DOMContentLoaded", function () {
                   }
                 </span>
                 <div class='settings-items-container'>
-                  <div class='settings-item'>
+                ${
+                  data.settings.timeLimit !== undefined
+                    ? `<div class='settings-item'>
                     <img src='img/time-limit.png' />
                     <span>${data.settings.timeLimit} sec</span>
-                  </div>
+                  </div>`
+                    : ""
+                }
                   ${
                     data.settings.forbidMoving !== undefined
                       ? `<div class='settings-item'>
