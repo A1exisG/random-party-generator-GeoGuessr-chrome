@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Random Party Generator - Geoguessr",
-  "description": "Generate random Geoguessr game sessions with customizable parameters. Quickly set up and play, with automatic redirection and history management.",
+  "description": "Generate random Geoguessr games with customizable parameters. Set up and play quickly, with auto redirection and history management",
   "version": "1.0",
   "icons": {
     "16": "icons/icon16.png",
