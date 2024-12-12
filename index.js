@@ -78,9 +78,11 @@ document.addEventListener("DOMContentLoaded", function () {
                           data.settings.rounds > 1 ? "rounds" : "round"
                         }`
                       : data.map ||
-                        `${data.settings.rounds} ${
-                          data.settings.rounds > 1 ? "rounds" : "round"
-                        }`
+                        (data.settings?.rounds !== undefined
+                          ? `${data.settings.rounds} ${
+                              data.settings.rounds > 1 ? "rounds" : "round"
+                            }`
+                          : "")
                   }
                 </span>
                 <div class='settings-items-container'>
