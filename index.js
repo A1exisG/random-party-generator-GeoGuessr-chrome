@@ -233,15 +233,28 @@ document.addEventListener("DOMContentLoaded", function () {
   const checkboxIds = ["map", "time", "move", "pan", "zoom", "rounds"];
   const checkboxes = {};
 
+  function updateRandomPartyButtonState() {
+    const randomPartyButton = document.getElementById("randomPartyButton");
+    const anyCheckboxChecked = Object.values(checkboxes).some(
+      (checked) => checked
+    );
+
+    randomPartyButton.disabled = !anyCheckboxChecked;
+  }
+
   checkboxIds.forEach((id) => {
     const checkbox = document.getElementById(id);
     loadCheckboxState(checkbox);
     checkboxes[id] = checkbox.checked;
+
     checkbox.addEventListener("change", () => {
       checkboxes[id] = checkbox.checked;
       saveCheckboxState(checkbox);
+      updateRandomPartyButtonState();
     });
   });
+
+  updateRandomPartyButtonState();
 
   async function generateRandomParty() {
     const getRandomMap = async () => {
